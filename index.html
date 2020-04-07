@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>osc-bullet - jQuery 弹幕插件</title>
+  <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="dist/osc-bullet.min.css">
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    .bullet-container {
+      position: relative;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .toolbar {
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    .btn {
+      outline: 0;
+      border: 0;
+      appearance: none;
+      padding: 4px 12px;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+      background: #06AD3D;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #05892f;
+    }
+  </style>
+</head>
+<body>
+  <div class="bullet-container">
+    <h1>osc-bullet</h1>
+    <p>OSCHINA 2020年愚人节弹幕插件</p>
+    <div class="toolbar">
+      <button class="btn btn-clear">清空弹幕</button>
+      <a class="btn" href="https://gitee.com/oschina/osc-bullet" target="_blank">源码</a>
+    </div>
+  </div>
+  <script src="dist/osc-bullet.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      var bulletColorArr = ["#06ad3d", "#55cb44", "#3498db", "#f46825", "#e74c3c", "#e15fd8", "#95a5a6", "#f39c12", "#6c51f3", "#f562d8"];
+      var bulletContentArr = ['愚人节快乐！ OSCHINA', 'OSCHINA.NET 是目前领先的中文开源技术社区', '我们传播开源的理念，推广开源项目，为 IT 开发者提供了一个发现、使用、并交流开源技术的平台', 'OSCHINA 社区', '开源中国社区'];
+
+      var bulletContainer = $('body');
+      var bulletTimer = null;
+      function addNext () {
+        var content = bulletContentArr[Math.floor((Math.random() * bulletContentArr.length))];
+        if (content) {
+          var bgColor = bulletColorArr[Math.floor((Math.random() * bulletColorArr.length))] || bulletColorArr[0];
+
+          bulletContainer.bullet({
+            avatar: 'https://static.oschina.net/new-osc/img/portrait.gif',
+            content: content,
+            url: 'https://www.oschina.net/?from=osc-bullet',
+            color: '',
+            bgColor: bgColor,
+            speed: 20,
+            safeTop: 150,
+            safeBottom: 20,
+            hasClose: true
+          });
+        }
+        bulletTimer = setTimeout(addNext, 2000);
+      }
+      addNext();
+
+      // clear
+      $('.btn-clear').on('click', function () {
+        bulletContainer.bullet.clear();
+
+        if (bulletTimer) {
+          clearTimeout(bulletTimer);
+          bulletTimer = null;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
