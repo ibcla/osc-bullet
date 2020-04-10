@@ -4,16 +4,17 @@ import './style.less';
 
 $.fn.bullet = function (options) {
   options = $.extend({
-    content: '',     // 内容文字
-    avatar: '',      // 头像图片 URL (可选)
-    url: '',         // 链接 (可选)
-    color: '',       // 字体颜色 (可选)
-    bgColor: '',     // 背景颜色 (可选)
-    speed: 20,       // 动画时间(秒)
-    top: 0,          // 距离顶部位置(默认随机)
-    safeTop: 0,      // 顶部安全距离(范围内不显示)
-    safeBottom: 0,   // 底部安全距离(范围内不显示)
-    hasClose: true   // 开启关闭按钮
+    content: '',        // 内容文字
+    avatar: '',         // 头像图片 URL (可选)
+    url: '',            // 链接 (可选)
+    color: '',          // 字体颜色 (可选)
+    bgColor: '',        // 背景颜色 (可选)
+    speed: 20,          // 动画时间(秒)
+    top: 0,             // 距离顶部位置(默认随机)
+    safeTop: 0,         // 顶部安全距离(范围内不显示)
+    safeBottom: 0,      // 底部安全距离(范围内不显示)
+    hasClose: true,     // 开启关闭按钮
+    escapeContent: true // 内容HTML转义(默认开启)
   }, options);
 
   const containerEl = $(this);
@@ -52,8 +53,9 @@ $.fn.bullet = function (options) {
   }
 
   // content
+  var bulletContent = !!options.escapeContent ? $('<div />').text(options.content).html() : options.content;
   bulletInnerHTML += '<div class="bullet-text">';
-  bulletInnerHTML += options.url ? '<a href="' + options.url + '" target="_blank" >' + $('<div />').text(options.content).html() + '</a>' : options.content;
+  bulletInnerHTML += options.url ? '<a href="' + options.url + '" target="_blank" >' + bulletContent + '</a>' : bulletContent;
   bulletInnerHTML += '</div>';
 
   // has close
