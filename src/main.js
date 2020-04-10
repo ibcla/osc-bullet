@@ -53,7 +53,7 @@ $.fn.bullet = function (options) {
 
   // content
   bulletInnerHTML += '<div class="bullet-text">';
-  bulletInnerHTML += options.url ? '<a href="' + options.url + '" target="_blank" >' + options.content + '</a>' : options.content;
+  bulletInnerHTML += options.url ? '<a href="' + options.url + '" target="_blank" >' + $('<div />').text(options.content).html() + '</a>' : options.content;
   bulletInnerHTML += '</div>';
 
   // has close
